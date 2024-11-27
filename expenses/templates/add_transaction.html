@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Expense</title>
+</head>
+<body>
+    <h1>Add Expense</h1>
+    <form method="post">
+        {% csrf_token %}
+        <label for="category">Category:</label>
+        <select name="category" id="category">
+            {% for category in categories %}
+                <option value="{{ category.id }}">{{ category.name }}</option>
+            {% endfor %}
+        </select><br>
+
+        <label for="transaction_type">Type:</label>
+        <input type="text" name="transaction_type" id="transaction_type"><br>
+
+        <label for="amount">Amount:</label>
+        <input type="number" name="amount" id="amount"><br>
+
+        <label for="date">Date:</label>
+        <input type="date" name="date" id="date"><br>
+
+        <label for="description">Description:</label>
+        <textarea name="description" id="description"></textarea><br>
+
+        <button type="submit">Save</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<h2>Your Budgets</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Category</th>
+            <th>Budgeted Amount</th>
+            <th>Total Spent</th>
+            <th>Remaining</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for budget in budget_data %}
+        <tr>
+            <td>{{ budget.category }}</td>
+            <td>{{ budget.amount }}</td>
+            <td>{{ budget.spent }}</td>
+            <td class="{% if budget.remaining < 0 %}text-danger{% endif %}">{{ budget.remaining }}</td>
+            <td>{{ budget.start_date }}</td>
+            <td>{{ budget.end_date }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6">No budgets available.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
