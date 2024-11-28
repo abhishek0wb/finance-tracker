@@ -33,6 +33,7 @@ DATABASES = {
 # Add this to print out database configuration for debugging
 print("DATABASE CONFIG:", DATABASES)
 
+ALLOWED_HOSTS = ['hisaab-bpri.onrender.com', 'localhost', '127.0.0.1']
 
 
 # Static files configuration
