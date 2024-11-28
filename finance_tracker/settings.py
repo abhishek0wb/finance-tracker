@@ -38,10 +38,11 @@ print("DATABASE CONFIG:", DATABASES)
 
 # Static files configuration
 STATIC_URL = '/static/'
+
+# Whitenoise for serving static files
 STATIC_ROOT = BASE_DIR / 'staticfiles'
-STATICFILES_DIRS = [
-    BASE_DIR / 'static',
-]
+
+# WhiteNoise configuration to serve static files in production
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
