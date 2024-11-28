@@ -11,21 +11,25 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
-from decouple import config
+from decouple import Config, config
+import dj_database_url
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+# Specify the path to the .env file
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
+# Use config function directly instead of Config() class
+# This avoids the need to pass a repository argument
 SECRET_KEY = config('SECRET_KEY')
-
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=False, cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
+
+# Database settings using dj-database-url
+DATABASES = {
+    'default': dj_database_url.config(default=config('DATABASE_URL'))
+}
+
+
 
 # Application definition
 INSTALLED_APPS = [
@@ -69,18 +73,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'finance_tracker.wsgi.application'
 
-from decouple import config
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DB_NAME'),
-        'USER': config('DB_USER'),
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('DB_HOST'),
-        'PORT': config('DB_PORT'),
-    }
-}
+
+# from decouple import config
+# import dj_database_url
+
+# DATABASES = {
+#     'default': dj_database_url.config(default=config('DATABASE_URL'))
+# }
+
 
 
 # Password validation
