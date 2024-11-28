@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 import os
-import dj_database_url
 from pathlib import Path
 from decouple import config, Csv
 
@@ -48,6 +47,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Application definition
 INSTALLED_APPS = [
+    'whitenoise.runserver_nostatic',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
