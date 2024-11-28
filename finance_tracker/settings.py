@@ -10,25 +10,34 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
-from pathlib import Path
-from decouple import Config, config
+import os
 import dj_database_url
+from pathlib import Path
+from decouple import config
 
-# Specify the path to the .env file
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Use config function directly instead of Config() class
-# This avoids the need to pass a repository argument
 SECRET_KEY = config('SECRET_KEY')
-DEBUG = config('DEBUG', default=False, cast=bool)
+DEBUG = False  # Important for production
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*']  # Update this later when you know your Render app's domain
 
-# Database settings using dj-database-url
+# Database configuration for Render
 DATABASES = {
-    'default': dj_database_url.config(default=config('DATABASE_URL'))
+    'default': dj_database_url.config(
+        default=config('DATABASE_URL'),
+        conn_max_age=600,
+        ssl_require=True
+    )
 }
 
+# Static files configuration
+STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [
+    BASE_DIR / 'static',
+]
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 # Application definition
@@ -75,15 +84,6 @@ WSGI_APPLICATION = 'finance_tracker.wsgi.application'
 
 
 
-# from decouple import config
-# import dj_database_url
-
-# DATABASES = {
-#     'default': dj_database_url.config(default=config('DATABASE_URL'))
-# }
-
-
-
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -104,10 +104,6 @@ LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_TZ = True
-
-# Static files (CSS, JavaScript, Images)
-STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 
 # Default primary key field type
