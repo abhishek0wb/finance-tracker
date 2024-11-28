@@ -13,23 +13,28 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 import os
 import dj_database_url
 from pathlib import Path
-from decouple import config
+from decouple import config, Csv
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = config('SECRET_KEY')
-DEBUG = False  # Important for production
+# Use os.environ.get as a fallback
+SECRET_KEY = os.environ.get('SECRET_KEY', config('SECRET_KEY', default='fallback-secret-key'))
 
-ALLOWED_HOSTS = ['*']  # Update this later when you know your Render app's domain
+# Explicitly handle DEBUG
+DEBUG = os.environ.get('DEBUG', config('DEBUG', default=False, cast=bool))
 
-# Database configuration for Render
+# Database configuration with multiple fallback methods
 DATABASES = {
-    'default': dj_database_url.config(
-        default=config('DATABASE_URL'),
-        conn_max_age=600,
-        ssl_require=True
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
+
+# Add this to print out database configuration for debugging
+print("DATABASE CONFIG:", DATABASES)
+
+
 
 # Static files configuration
 STATIC_URL = '/static/'
@@ -54,6 +59,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
