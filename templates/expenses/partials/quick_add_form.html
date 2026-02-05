@@ -1,0 +1,47 @@
+<div class="card mb-3">
+    <div class="card-header bg-success text-white">
+        <h5 class="mb-0">Quick Add Transaction</h5>
+    </div>
+    <div class="card-body">
+        <form hx-post="{% url 'expenses:quick_add_transaction' %}"
+              hx-target="#transaction-list"
+              hx-swap="afterbegin"
+              hx-on::after-request="this.reset()">
+            {% csrf_token %}
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <input type="text" 
+                           name="category" 
+                           class="form-control" 
+                           placeholder="Category" 
+                           required>
+                </div>
+                <div class="col-md-2">
+                    <select name="transaction_type" class="form-select" required>
+                        <option value="Expense">Expense</option>
+                        <option value="Income">Income</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <input type="number" 
+                           name="amount" 
+                           class="form-control" 
+                           placeholder="Amount" 
+                           step="0.01" 
+                           required>
+                </div>
+                <div class="col-md-3">
+                    <input type="text" 
+                           name="description" 
+                           class="form-control" 
+                           placeholder="Description">
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-success w-100">
+                        Add
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

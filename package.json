@@ -1,0 +1,16 @@
+{
+  "name": "hisaab-finance-tracker",
+  "version": "1.0.0",
+  "description": "Modern Finance Tracker with Django, HTMX, Tailwind CSS, and DaisyUI",
+  "scripts": {
+    "dev": "npx tailwindcss -i ./static/css/input.css -o ./static/css/output.css --watch",
+    "build": "npx tailwindcss -i ./static/css/input.css -o ./static/css/output.css --minify"
+  },
+  "keywords": ["django", "htmx", "tailwindcss", "daisyui"],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "tailwindcss": "^3.4.1",
+    "daisyui": "^4.6.0"
+  }
+}

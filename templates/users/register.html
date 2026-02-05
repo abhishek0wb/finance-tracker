@@ -1,0 +1,133 @@
+{% extends 'base_tailwind.html' %}
+{% load static %}
+
+{% block title %}Create Account - Hisaab{% endblock %}
+
+{% block content %}
+<div class="min-h-[calc(100vh-4rem)] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div class="auth-card animate-fade-in-professional">
+        <!-- Logo & Title -->
+        <div class="text-center mb-8">
+            <div class="w-16 h-16 bg-primary-900 rounded-lg flex items-center justify-center mx-auto mb-4">
+                <i class="bi bi-wallet2 text-white text-3xl"></i>
+            </div>
+            <h1 class="text-3xl font-bold text-primary-900 mb-2">Create Account</h1>
+            <p class="text-base-content/70">Start managing your finances professionally</p>
+        </div>
+        
+        <!-- Error Messages -->
+        {% if form.errors %}
+        <div class="alert alert-error mb-6 rounded-lg">
+            <i class="bi bi-exclamation-circle"></i>
+            <div>
+                <p class="font-semibold">Please correct the following errors:</p>
+                <ul class="list-disc list-inside mt-2">
+                    {% for field, errors in form.errors.items %}
+                        {% for error in errors %}
+                        <li class="text-sm">{{ error }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        {% endif %}
+        
+        <!-- Registration Form -->
+        <form method="POST" action="{% url 'users:register' %}" class="space-y-6">
+            {% csrf_token %}
+            
+            <!-- Username Field -->
+            <div>
+                <label for="username" class="block text-sm font-medium text-primary-900 mb-2">
+                    Username
+                </label>
+                <input 
+                    type="text" 
+                    id="username" 
+                    name="username" 
+                    required
+                    class="input-professional w-full"
+                    placeholder="Choose a username"
+                    value="{{ form.username.value|default:'' }}"
+                    autofocus>
+                <p class="text-xs text-base-content/60 mt-1">
+                    Letters, digits and @/./+/-/_ only
+                </p>
+            </div>
+            
+            <!-- Email Field -->
+            <div>
+                <label for="email" class="block text-sm font-medium text-primary-900 mb-2">
+                    Email Address
+                </label>
+                <input 
+                    type="email" 
+                    id="email" 
+                    name="email" 
+                    required
+                    class="input-professional w-full"
+                    placeholder="your.email@example.com"
+                    value="{{ form.email.value|default:'' }}">
+            </div>
+            
+            <!-- Password Field -->
+            <div>
+                <label for="password1" class="block text-sm font-medium text-primary-900 mb-2">
+                    Password
+                </label>
+                <input 
+                    type="password" 
+                    id="password1" 
+                    name="password1" 
+                    required
+                    class="input-professional w-full"
+                    placeholder="Create a strong password">
+                <p class="text-xs text-base-content/60 mt-1">
+                    At least 8 characters
+                </p>
+            </div>
+            
+            <!-- Confirm Password Field -->
+            <div>
+                <label for="password2" class="block text-sm font-medium text-primary-900 mb-2">
+                    Confirm Password
+                </label>
+                <input 
+                    type="password" 
+                    id="password2" 
+                    name="password2" 
+                    required
+                    class="input-professional w-full"
+                    placeholder="Re-enter your password">
+            </div>
+            
+            <!-- Terms & Conditions -->
+            <div class="flex items-start gap-2">
+                <input type="checkbox" class="checkbox checkbox-sm checkbox-primary mt-1" required>
+                <label class="text-sm text-base-content/70">
+                    I agree to the <a href="#" class="text-primary-900 hover:text-primary-700 font-medium">Terms of Service</a> and <a href="#" class="text-primary-900 hover:text-primary-700 font-medium">Privacy Policy</a>
+                </label>
+            </div>
+            
+            <!-- Submit Button -->
+            <button type="submit" class="btn-professional btn-primary-professional w-full">
+                <i class="bi bi-person-plus"></i>
+                Create Account
+            </button>
+        </form>
+        
+        <!-- Divider -->
+        <div class="divider my-8">OR</div>
+        
+        <!-- Sign In Link -->
+        <div class="text-center">
+            <p class="text-sm text-base-content/70">
+                Already have an account?
+                <a href="{% url 'users:login' %}" class="font-medium text-primary-900 hover:text-primary-700">
+                    Sign in instead
+                </a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

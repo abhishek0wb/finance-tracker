@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-theme="hisaab">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tailwind Test</title>
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+</head>
+<body class="bg-base-200 p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-4xl font-bold text-primary mb-4">Tailwind CSS Test Page</h1>
+        
+        <div class="alert alert-success mb-4">
+            <i class="bi bi-check-circle"></i>
+            <span>If you can see this styled alert, Tailwind CSS is working!</span>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+            <div class="stat bg-base-100 rounded-box shadow">
+                <div class="stat-title">Test Stat 1</div>
+                <div class="stat-value text-primary">100</div>
+                <div class="stat-desc">This should be styled</div>
+            </div>
+            
+            <div class="stat bg-base-100 rounded-box shadow">
+                <div class="stat-title">Test Stat 2</div>
+                <div class="stat-value text-success">200</div>
+                <div class="stat-desc">With DaisyUI</div>
+            </div>
+            
+            <div class="stat bg-base-100 rounded-box shadow">
+                <div class="stat-title">Test Stat 3</div>
+                <div class="stat-value text-error">300</div>
+                <div class="stat-desc">Components</div>
+            </div>
+        </div>
+        
+        <div class="card bg-base-100 shadow-xl mb-4">
+            <div class="card-body">
+                <h2 class="card-title">Test Card</h2>
+                <p>If this card has a white background and shadow, DaisyUI is working!</p>
+                <div class="card-actions justify-end">
+                    <button class="btn btn-primary">Primary Button</button>
+                    <button class="btn btn-success">Success Button</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bg-white p-4 rounded-lg shadow">
+            <h3 class="text-xl font-bold mb-2">Diagnostic Info:</h3>
+            <ul class="list-disc list-inside space-y-1">
+                <li>Static URL: {% static 'css/output.css' %}</li>
+                <li>If you see styled buttons above, everything is working!</li>
+                <li>If you see raw HTML, check browser console for errors</li>
+            </ul>
+        </div>
+        
+        <div class="mt-4">
+            <a href="{% url 'expenses:dashboard' %}" class="btn btn-primary">Go to Dashboard</a>
+        </div>
+    </div>
+</body>
+</html>

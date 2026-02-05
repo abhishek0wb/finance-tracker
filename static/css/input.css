@@ -1,0 +1,190 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Professional Business Theme Customizations */
+@layer components {
+  /* Professional Buttons */
+  .btn-professional {
+    @apply rounded-lg px-6 py-2.5 font-medium transition-all duration-200 shadow-sm hover:shadow-md min-h-[46px] flex items-center justify-center gap-2;
+  }
+  
+  .btn-primary-professional {
+    @apply bg-primary-900 text-white hover:bg-primary-800 border-0;
+  }
+  
+  .btn-secondary-professional {
+    @apply bg-secondary text-white hover:bg-secondary/90 border-0;
+  }
+  
+  .btn-success-professional {
+    @apply bg-success-600 text-white hover:bg-success-700 border-0;
+  }
+  
+  .btn-outline-professional {
+    @apply border-2 border-primary-900 text-primary-900 bg-transparent hover:bg-primary-900 hover:text-white;
+  }
+  
+  /* Professional Cards */
+  .card-professional {
+    @apply bg-white dark:bg-slate-900 dark:border-slate-800 rounded-lg shadow-sm border border-base-300 p-6 transition-all duration-300 hover:shadow-md;
+  }
+  
+  .card-stat-professional {
+    @apply bg-white dark:bg-slate-900 dark:border-slate-800 rounded-lg shadow-sm border border-base-300 p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+  }
+  
+  /* Auth Card */
+  .auth-card {
+    @apply bg-white dark:bg-slate-900 dark:border-slate-800 rounded-lg shadow-xl border border-base-300 p-8 w-full max-w-md;
+  }
+  
+  /* Professional Form Inputs */
+  .input-professional {
+    @apply input input-bordered rounded-lg border-base-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 focus:border-primary-900 dark:focus:border-slate-500 focus:ring-2 focus:ring-primary-900/20 dark:focus:ring-slate-500/20 transition-all duration-200 min-h-[46px];
+  }
+  
+  .select-professional {
+    @apply select select-bordered rounded-lg border-base-300 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 focus:border-primary-900 dark:focus:border-slate-500 focus:ring-2 focus:ring-primary-900/20 dark:focus:ring-slate-500/20 transition-all duration-200 min-h-[46px];
+  }
+  
+  /* Transaction Cards */
+  .transaction-card-professional {
+    @apply bg-white dark:bg-slate-900 dark:border-slate-800 rounded-lg shadow-sm border border-base-300 p-5 transition-all duration-300 hover:shadow-md hover:border-primary-200 dark:hover:border-slate-700;
+  }
+  
+  /* Activity Item */
+  .activity-item-professional {
+    @apply flex items-center gap-4 p-4 rounded-lg bg-white dark:bg-slate-900 hover:bg-base-100 dark:hover:bg-slate-800 transition-all duration-200 border border-base-300 dark:border-slate-800 hover:border-primary-200 dark:hover:border-slate-700;
+  }
+  
+  /* Stat Cards */
+  .stat-professional {
+    @apply bg-white dark:bg-slate-900 dark:border-slate-800 rounded-lg shadow-sm border border-base-300 p-6;
+  }
+  
+  /* Badge Enhancements */
+  .badge-income-professional {
+    @apply badge bg-success-50 text-success-700 border-success-200 gap-1 px-3 py-3 text-xs font-semibold;
+  }
+  
+  .badge-expense-professional {
+    @apply badge bg-red-50 text-danger-700 border-red-200 gap-1 px-3 py-3 text-xs font-semibold;
+  }
+  
+  /* Page Header */
+  .page-header {
+    @apply mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4;
+  }
+  
+  .page-title {
+    @apply text-3xl font-bold text-primary-900 dark:text-slate-100 tracking-tight;
+  }
+  
+  .page-subtitle {
+    @apply text-base-content/70 dark:text-slate-400 text-base mt-1;
+  }
+  
+  /* Section Header */
+  .section-header {
+    @apply flex items-center justify-between mb-6;
+  }
+  
+  .section-title {
+    @apply text-xl font-bold text-primary-900 dark:text-slate-100 flex items-center gap-2;
+  }
+  
+  /* Professional Animations */
+  .animate-fade-in-professional {
+    animation: fadeInProfessional 0.4s ease-in-out;
+  }
+  
+  .animate-slide-up-professional {
+    animation: slideUpProfessional 0.4s ease-out;
+  }
+  
+  /* HTMX transitions */
+  .htmx-swapping {
+    opacity: 0;
+    transform: scale(0.98);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+  }
+  
+  .htmx-settling {
+    opacity: 1;
+    transform: scale(1);
+  }
+  
+  /* Loading spinner */
+  .htmx-indicator {
+    display: none;
+  }
+  
+  .htmx-request .htmx-indicator {
+    display: inline-block;
+  }
+  
+  /* Professional spacing */
+  .content-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8;
+  }
+  
+  /* Typography */
+  .text-currency {
+    @apply text-2xl font-bold tabular-nums;
+  }
+  
+  .text-label {
+    @apply text-sm font-medium text-base-content/70 uppercase tracking-wide;
+  }
+}
+
+@keyframes fadeInProfessional {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUpProfessional {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-base-200;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-primary-400 rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-primary-600;
+}
+
+/* Smooth transitions for all interactive elements */
+button, a, input, select, textarea {
+  @apply transition-all duration-200;
+}
+
+/* Focus styles */
+*:focus-visible {
+  @apply outline-none ring-2 ring-primary-900/20 ring-offset-2;
+}

@@ -1,0 +1,141 @@
+{% extends 'users/base.html' %}
+{% load static %}
+
+{% block title %}Transactions - Hisaab{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Additional transaction-specific styles */
+    .transaction-card {
+        transition: all 0.3s ease;
+    }
+    
+    .transaction-card.htmx-swapping {
+        opacity: 0;
+        transform: scale(0.95);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid px-4 py-4">
+    <!-- Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                <div>
+                    <h1 class="mb-2">
+                        <i class="bi bi-list-ul"></i> Transactions
+                    </h1>
+                    <p class="text-muted mb-0">Track and manage all your financial transactions</p>
+                </div>
+                <a href="{% url 'expenses:dashboard' %}" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> Back to Dashboard
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Add Form -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card fade-in">
+                <div class="card-header bg-success text-white">
+                    <i class="bi bi-plus-circle me-2"></i>
+                    <strong>Quick Add Transaction</strong>
+                </div>
+                <div class="card-body">
+                    <form hx-post="{% url 'expenses:quick_add_transaction' %}"
+                          hx-target="#transaction-list"
+                          hx-swap="afterbegin"
+                          hx-on::after-request="this.reset()">
+                        {% csrf_token %}
+                        <div class="row g-3">
+                            <div class="col-md-3">
+                                <label class="form-label">Category</label>
+                                <input type="text" 
+                                       name="category" 
+                                       class="form-control" 
+                                       placeholder="e.g., Food, Transport" 
+                                       required>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">Type</label>
+                                <select name="transaction_type" class="form-select" required>
+                                    <option value="Expense">Expense</option>
+                                    <option value="Income">Income</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label class="form-label">Amount (₹)</label>
+                                <input type="number" 
+                                       name="amount" 
+                                       class="form-control" 
+                                       placeholder="0.00" 
+                                       step="0.01" 
+                                       required>
+                            </div>
+                            <div class="col-md-3">
+                                <label class="form-label">Description</label>
+                                <input type="text" 
+                                       name="description" 
+                                       class="form-control" 
+                                       placeholder="Optional note">
+                            </div>
+                            <div class="col-md-2 d-flex align-items-end">
+                                <button type="submit" class="btn btn-success w-100">
+                                    <i class="bi bi-plus-lg"></i> Add
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Search Box -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card fade-in" style="animation-delay: 0.1s;">
+                <div class="card-body">
+                    <div class="search-box">
+                        <i class="bi bi-search search-icon"></i>
+                        <input 
+                            type="search" 
+                            name="q" 
+                            class="form-control" 
+                            placeholder="Search transactions by category or description..."
+                            hx-get="{% url 'expenses:search_transactions' %}"
+                            hx-trigger="keyup changed delay:500ms, search"
+                            hx-target="#transaction-list"
+                            hx-indicator=".spinner">
+                        <div class="spinner spinner-border spinner-border-sm htmx-indicator" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Transaction List -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card fade-in" style="animation-delay: 0.2s;">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <div>
+                        <i class="bi bi-receipt me-2"></i>
+                        <strong>Transaction History</strong>
+                    </div>
+                    <span class="badge badge-primary">All Time</span>
+                </div>
+                <div class="card-body p-0" id="transaction-list">
+                    {% include 'expenses/partials/transaction_list.html' %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

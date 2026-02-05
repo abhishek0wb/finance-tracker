@@ -1,0 +1,93 @@
+{% extends 'base_tailwind.html' %}
+{% load static %}
+
+{% block title %}Sign In - Hisaab{% endblock %}
+
+{% block content %}
+<div class="min-h-[calc(100vh-4rem)] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div class="auth-card animate-fade-in-professional">
+        <!-- Logo & Title -->
+        <div class="text-center mb-8">
+            <div class="w-16 h-16 bg-primary-900 rounded-lg flex items-center justify-center mx-auto mb-4">
+                <i class="bi bi-wallet2 text-white text-3xl"></i>
+            </div>
+            <h1 class="text-3xl font-bold text-primary-900 mb-2">Welcome Back</h1>
+            <p class="text-base-content/70">Sign in to your Hisaab account</p>
+        </div>
+        
+        <!-- Error Messages -->
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-error mb-6 rounded-lg">
+                <i class="bi bi-exclamation-circle"></i>
+                <span>{{ message }}</span>
+            </div>
+            {% endfor %}
+        {% endif %}
+        
+        <!-- Login Form -->
+        <form method="POST" action="{% url 'users:login' %}" class="space-y-6">
+            {% csrf_token %}
+            
+            <!-- Username Field -->
+            <div>
+                <label for="username" class="block text-sm font-medium text-primary-900 mb-2">
+                    Username
+                </label>
+                <input 
+                    type="text" 
+                    id="username" 
+                    name="username" 
+                    required
+                    class="input-professional w-full"
+                    placeholder="Enter your username"
+                    autofocus>
+            </div>
+            
+            <!-- Password Field -->
+            <div>
+                <label for="password" class="block text-sm font-medium text-primary-900 mb-2">
+                    Password
+                </label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="password" 
+                    required
+                    class="input-professional w-full"
+                    placeholder="Enter your password">
+            </div>
+            
+            <!-- Remember Me & Forgot Password -->
+            <div class="flex items-center justify-between">
+                <label class="flex items-center gap-2 cursor-pointer">
+                    <input type="checkbox" class="checkbox checkbox-sm checkbox-primary" name="remember">
+                    <span class="text-sm text-base-content/70">Remember me</span>
+                </label>
+                <a href="#" class="text-sm font-medium text-primary-900 hover:text-primary-700">
+                    Forgot password?
+                </a>
+            </div>
+            
+            <!-- Submit Button -->
+            <button type="submit" class="btn-professional btn-primary-professional w-full">
+                <i class="bi bi-box-arrow-in-right"></i>
+                Sign In
+            </button>
+        </form>
+        
+        <!-- Divider -->
+        <div class="divider my-8">OR</div>
+        
+        <!-- Sign Up Link -->
+        <div class="text-center">
+            <p class="text-sm text-base-content/70">
+                Don't have an account?
+                <a href="{% url 'users:register' %}" class="font-medium text-primary-900 hover:text-primary-700">
+                    Create one now
+                </a>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

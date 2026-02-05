@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hisaab - Master Your Money</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💼</text></svg>">
+</head>
+<body class="bg-gradient-to-br from-slate-50 via-slate-100 to-slate-50 min-h-screen">
+    
+    <!-- Navigation -->
+    <nav class="bg-white border-b border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center gap-2">
+                    <i class="bi bi-wallet2 text-navy-900 text-2xl"></i>
+                    <span class="text-xl font-bold text-navy-900">Hisaab</span>
+                </div>
+                <div class="flex gap-3">
+                    <a href="{% url 'users:login' %}" class="btn-outline-professional">
+                        Sign In
+                    </a>
+                    <a href="{% url 'users:register' %}" class="btn-primary-professional">
+                        Get Started
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="py-20 px-4">
+        <div class="max-w-5xl mx-auto text-center">
+            <h1 class="text-5xl md:text-6xl font-bold text-navy-900 mb-6 leading-tight">
+                Master Your Money<br>with Hisaab
+            </h1>
+            <p class="text-xl text-slate-600 mb-10 max-w-2xl mx-auto leading-relaxed">
+                A minimalist, high-end finance tracker built for clarity and control. 
+                Track expenses, set budgets, and achieve your financial goals with elegance.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="{% url 'users:register' %}" class="btn-primary-professional text-lg px-8 py-4">
+                    <i class="bi bi-rocket-takeoff mr-2"></i>
+                    Get Started Free
+                </a>
+                <a href="{% url 'users:login' %}" class="btn-outline-professional text-lg px-8 py-4">
+                    <i class="bi bi-box-arrow-in-right mr-2"></i>
+                    Sign In
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Grid -->
+    <section class="py-16 px-4">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <!-- Feature 1: Instant Tracking -->
+                <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-8 hover:shadow-md transition-shadow">
+                    <div class="w-14 h-14 bg-emerald-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="bi bi-lightning-charge text-emerald-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-navy-900 mb-3">Instant Tracking</h3>
+                    <p class="text-slate-600 leading-relaxed">
+                        HTMX-powered interface with no page reloads. Add transactions, search, and delete 
+                        with lightning-fast responsiveness. Your data updates in real-time.
+                    </p>
+                </div>
+
+                <!-- Feature 2: Intelligent Budgets -->
+                <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-8 hover:shadow-md transition-shadow">
+                    <div class="w-14 h-14 bg-navy-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="bi bi-piggy-bank text-navy-900 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-navy-900 mb-3">Intelligent Budgets</h3>
+                    <p class="text-slate-600 leading-relaxed">
+                        Set spending limits by category and watch your progress in real-time. 
+                        Visual indicators help you stay on track and make informed decisions.
+                    </p>
+                </div>
+
+                <!-- Feature 3: Data Privacy -->
+                <div class="bg-white rounded-lg shadow-sm border border-slate-200 p-8 hover:shadow-md transition-shadow">
+                    <div class="w-14 h-14 bg-rose-100 rounded-lg flex items-center justify-center mb-4">
+                        <i class="bi bi-shield-check text-rose-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-navy-900 mb-3">Data Privacy</h3>
+                    <p class="text-slate-600 leading-relaxed">
+                        Your financial data is yours alone. No third-party integrations, no data selling, 
+                        no tracking. Complete control over your sensitive information.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="py-16 px-4 bg-white">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold text-navy-900 text-center mb-12">
+                Why Choose Hisaab?
+            </h2>
+            <div class="space-y-6">
+                <div class="flex gap-4">
+                    <div class="flex-shrink-0">
+                        <div class="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center">
+                            <i class="bi bi-check-lg text-emerald-600 text-xl"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-navy-900 mb-1">Professional Design</h4>
+                        <p class="text-slate-600">Clean, modern interface that rivals premium React applications</p>
+                    </div>
+                </div>
+                <div class="flex gap-4">
+                    <div class="flex-shrink-0">
+                        <div class="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center">
+                            <i class="bi bi-check-lg text-emerald-600 text-xl"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-navy-900 mb-1">No Subscriptions</h4>
+                        <p class="text-slate-600">Free to use with no hidden fees or premium tiers</p>
+                    </div>
+                </div>
+                <div class="flex gap-4">
+                    <div class="flex-shrink-0">
+                        <div class="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center">
+                            <i class="bi bi-check-lg text-emerald-600 text-xl"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-navy-900 mb-1">Simple & Powerful</h4>
+                        <p class="text-slate-600">Easy to learn, powerful enough for serious financial tracking</p>
+                    </div>
+                </div>
+                <div class="flex gap-4">
+                    <div class="flex-shrink-0">
+                        <div class="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center">
+                            <i class="bi bi-check-lg text-emerald-600 text-xl"></i>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-navy-900 mb-1">Secure & Private</h4>
+                        <p class="text-slate-600">Your data stays with you, encrypted and protected</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 px-4">
+        <div class="max-w-3xl mx-auto text-center">
+            <h2 class="text-4xl font-bold text-navy-900 mb-6">
+                Ready to Take Control?
+            </h2>
+            <p class="text-xl text-slate-600 mb-8">
+                Join Hisaab today and start your journey to financial clarity
+            </p>
+            <a href="{% url 'users:register' %}" class="btn-primary-professional text-lg px-8 py-4 inline-flex items-center">
+                <i class="bi bi-rocket-takeoff mr-2"></i>
+                Create Your Free Account
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center gap-2">
+                    <i class="bi bi-wallet2 text-navy-900 text-xl"></i>
+                    <span class="font-semibold text-navy-900">Hisaab Finance</span>
+                </div>
+                <p class="text-slate-600 text-sm">
+                    © 2026 Hisaab Finance. Professional grade tracking.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

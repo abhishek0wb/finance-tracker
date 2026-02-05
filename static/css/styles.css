@@ -1,0 +1,689 @@
+/* ============================================
+   Hisaab - Modern Finance Tracker Styles
+   ============================================ */
+
+/* CSS Variables - Color Palette */
+:root {
+  /* Primary Colors */
+  --color-primary: #4f46e5;        /* Indigo */
+  --color-primary-dark: #4338ca;
+  --color-primary-light: #6366f1;
+  
+  /* Success/Income */
+  --color-success: #10b981;        /* Emerald */
+  --color-success-light: #d1fae5;
+  --color-success-dark: #059669;
+  
+  /* Danger/Expense */
+  --color-danger: #ef4444;         /* Rose */
+  --color-danger-light: #fee2e2;
+  --color-danger-dark: #dc2626;
+  
+  /* Backgrounds */
+  --color-bg-primary: #f8fafc;     /* Slate */
+  --color-bg-secondary: #ffffff;
+  --color-bg-dark: #1e1b4b;        /* Deep Indigo */
+  
+  /* Text Colors */
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #64748b;
+  --color-text-light: #94a3b8;
+  
+  /* Borders */
+  --color-border: #e2e8f0;
+  --color-border-focus: var(--color-primary);
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  
+  /* Spacing */
+  --border-radius: 16px;
+  --border-radius-sm: 10px;
+  --border-radius-lg: 20px;
+}
+
+/* ============================================
+   Global Styles
+   ============================================ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============================================
+   Typography
+   ============================================ */
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--color-text-primary);
+}
+
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.5rem; }
+h4 { font-size: 1.25rem; }
+
+.text-muted {
+  color: var(--color-text-secondary) !important;
+}
+
+/* ============================================
+   Buttons - Modern Flat Design
+   ============================================ */
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--border-radius-sm);
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: none;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: none;
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+/* Primary Button */
+.btn-primary {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-dark);
+  color: white;
+}
+
+/* Success Button */
+.btn-success {
+  background-color: var(--color-success);
+  color: white;
+}
+
+.btn-success:hover {
+  background-color: var(--color-success-dark);
+  color: white;
+}
+
+/* Danger Button */
+.btn-danger {
+  background-color: var(--color-danger);
+  color: white;
+}
+
+.btn-danger:hover {
+  background-color: var(--color-danger-dark);
+  color: white;
+}
+
+/* Secondary Button */
+.btn-secondary {
+  background-color: #e2e8f0;
+  color: var(--color-text-primary);
+}
+
+.btn-secondary:hover {
+  background-color: #cbd5e1;
+  color: var(--color-text-primary);
+}
+
+/* Outline Buttons */
+.btn-outline-primary {
+  border: 2px solid var(--color-primary);
+  color: var(--color-primary);
+  background: transparent;
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+/* Small Button */
+.btn-sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+}
+
+/* Large Button */
+.btn-lg {
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+}
+
+/* ============================================
+   Form Controls
+   ============================================ */
+
+.form-control,
+.form-select {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-sm);
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+  background-color: white;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+  outline: none;
+}
+
+.form-label {
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-bottom: 0.5rem;
+  font-size: 0.9rem;
+}
+
+/* ============================================
+   Cards - Modern Design
+   ============================================ */
+
+.card {
+  border: none;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-md);
+  background-color: var(--color-bg-secondary);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+.card-header {
+  background-color: transparent;
+  border-bottom: 1px solid var(--color-border);
+  padding: 1.5rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--color-text-primary);
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+/* Summary Cards for Dashboard */
+.summary-card {
+  border: none;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-md);
+  padding: 2rem;
+  background: linear-gradient(135deg, var(--color-bg-secondary) 0%, #fafbfc 100%);
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.summary-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-xl);
+}
+
+.summary-card .card-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.summary-card .card-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 0.5rem;
+}
+
+.summary-card .card-value {
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.summary-card .card-change {
+  font-size: 0.875rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* Income Card */
+.summary-card.income .card-icon {
+  background-color: var(--color-success-light);
+  color: var(--color-success);
+}
+
+.summary-card.income .card-value {
+  color: var(--color-success);
+}
+
+/* Expense Card */
+.summary-card.expense .card-icon {
+  background-color: var(--color-danger-light);
+  color: var(--color-danger);
+}
+
+.summary-card.expense .card-value {
+  color: var(--color-danger);
+}
+
+/* Balance Card */
+.summary-card.balance .card-icon {
+  background-color: #e0e7ff;
+  color: var(--color-primary);
+}
+
+.summary-card.balance .card-value {
+  color: var(--color-primary);
+}
+
+/* ============================================
+   Badges & Pills
+   ============================================ */
+
+.badge {
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.badge-income {
+  background-color: var(--color-success-light);
+  color: var(--color-success-dark);
+}
+
+.badge-expense {
+  background-color: var(--color-danger-light);
+  color: var(--color-danger-dark);
+}
+
+.badge-primary {
+  background-color: #e0e7ff;
+  color: var(--color-primary);
+}
+
+/* ============================================
+   Tables - Clean Design
+   ============================================ */
+
+.table-modern {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.table-modern thead th {
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-secondary);
+  font-weight: 700;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 1rem 1.5rem;
+  border: none;
+}
+
+.table-modern tbody tr {
+  background-color: white;
+  transition: all 0.2s ease;
+}
+
+.table-modern tbody tr:hover {
+  background-color: var(--color-bg-primary);
+  transform: scale(1.01);
+}
+
+.table-modern tbody td {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--color-border);
+  vertical-align: middle;
+}
+
+.table-modern tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* ============================================
+   Transaction Cards (Mobile-Friendly)
+   ============================================ */
+
+.transaction-card {
+  background-color: white;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  padding: 1.25rem;
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+.transaction-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.transaction-card .top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.transaction-card .description {
+  font-weight: 600;
+  color: var(--color-text-primary);
+  font-size: 1rem;
+}
+
+.transaction-card .date {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}
+
+.transaction-card .divider {
+  border-top: 1px solid var(--color-border);
+  margin: 0.75rem 0;
+}
+
+.transaction-card .bottom-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.transaction-card .amount {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.transaction-card .amount.income {
+  color: var(--color-success);
+}
+
+.transaction-card .amount.expense {
+  color: var(--color-danger);
+}
+
+/* ============================================
+   Empty States
+   ============================================ */
+
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.empty-state-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1.5rem;
+  background-color: var(--color-bg-primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  color: var(--color-text-secondary);
+}
+
+.empty-state-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin-bottom: 0.5rem;
+}
+
+.empty-state-description {
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+  margin-bottom: 2rem;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ============================================
+   HTMX Transitions
+   ============================================ */
+
+.htmx-swapping {
+  opacity: 0;
+  transform: scale(0.95);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.htmx-request .spinner {
+  display: inline-block;
+}
+
+.spinner-border {
+  border-color: var(--color-primary);
+  border-right-color: transparent;
+}
+
+/* Loading Indicator */
+.htmx-indicator {
+  display: none;
+}
+
+.htmx-request .htmx-indicator {
+  display: inline-block;
+}
+
+/* ============================================
+   Search Box
+   ============================================ */
+
+.search-box {
+  position: relative;
+}
+
+.search-box input {
+  padding-left: 3rem;
+  padding-right: 3rem;
+}
+
+.search-box .search-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-text-secondary);
+  pointer-events: none;
+}
+
+.search-box .spinner {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: none;
+}
+
+/* ============================================
+   Navbar - Glassmorphism
+   ============================================ */
+
+.navbar-modern {
+  background: rgba(30, 27, 75, 0.95);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1rem 0;
+  box-shadow: var(--shadow-md);
+}
+
+.navbar-brand {
+  font-weight: 800;
+  font-size: 1.5rem;
+  color: white !important;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.navbar-brand i {
+  font-size: 1.75rem;
+}
+
+.nav-link {
+  color: rgba(255, 255, 255, 0.8) !important;
+  font-weight: 600;
+  padding: 0.5rem 1rem !important;
+  border-radius: var(--border-radius-sm);
+  transition: all 0.2s ease;
+}
+
+.nav-link:hover {
+  color: white !important;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.dropdown-menu {
+  border: none;
+  border-radius: var(--border-radius-sm);
+  box-shadow: var(--shadow-lg);
+  padding: 0.5rem;
+}
+
+.dropdown-item {
+  border-radius: var(--border-radius-sm);
+  padding: 0.75rem 1rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.dropdown-item:hover {
+  background-color: var(--color-bg-primary);
+  color: var(--color-primary);
+}
+
+/* ============================================
+   Utility Classes
+   ============================================ */
+
+.text-primary { color: var(--color-primary) !important; }
+.text-success { color: var(--color-success) !important; }
+.text-danger { color: var(--color-danger) !important; }
+
+.bg-primary { background-color: var(--color-primary) !important; }
+.bg-success { background-color: var(--color-success) !important; }
+.bg-danger { background-color: var(--color-danger) !important; }
+
+.shadow-sm { box-shadow: var(--shadow-sm); }
+.shadow-md { box-shadow: var(--shadow-md); }
+.shadow-lg { box-shadow: var(--shadow-lg); }
+
+/* ============================================
+   Responsive Design
+   ============================================ */
+
+@media (max-width: 768px) {
+  .summary-card .card-value {
+    font-size: 2rem;
+  }
+  
+  .transaction-card .bottom-row {
+    flex-wrap: wrap;
+  }
+  
+  .transaction-card .amount {
+    font-size: 1.25rem;
+  }
+  
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.75rem; }
+}
+
+@media (max-width: 576px) {
+  .summary-card {
+    padding: 1.5rem;
+  }
+  
+  .summary-card .card-value {
+    font-size: 1.75rem;
+  }
+  
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ============================================
+   Animations
+   ============================================ */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.slide-in {
+  animation: slideIn 0.3s ease;
+}

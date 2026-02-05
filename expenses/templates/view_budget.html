@@ -1,0 +1,21 @@
+<h1>My Budgets</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Category</th>
+            <th>Amount</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for budget in budgets %}
+        <tr>
+            <td>{{ budget.category }}</td>
+            <td>{{ budget.amount }}</td>
+            <td>{{ budget.start_date }}</td>
+            <td>{{ budget.end_date }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

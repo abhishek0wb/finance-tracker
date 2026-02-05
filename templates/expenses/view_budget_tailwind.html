@@ -1,0 +1,311 @@
+{% extends 'base_tailwind.html' %}
+{% load static %}
+
+{% block title %}Budgets - Hisaab{% endblock %}
+
+{% block content %}
+<div class="content-container">
+    <!-- Page Header -->
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">Budget Management</h1>
+            <p class="page-subtitle">Set and track your spending limits</p>
+        </div>
+        <a href="{% url 'expenses:dashboard' %}" 
+           class="btn-professional btn-outline-professional">
+            <i class="bi bi-arrow-left"></i>
+            Back to Dashboard
+        </a>
+    </div>
+
+    <!-- Add/Update Budget Form -->
+    <div class="card-professional mb-6 animate-fade-in-professional">
+        <div class="section-header">
+            <h2 class="section-title">
+                <i class="bi bi-plus-circle text-success-600"></i>
+                <span id="formTitle">Add Budget</span>
+            </h2>
+        </div>
+        
+        <form method="POST" action="">
+            {% csrf_token %}
+            <input type="hidden" id="budget_id" name="budget_id">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text font-medium text-primary-900 dark:text-slate-100">Category</span>
+                    </label>
+                    <input list="categories" 
+                           id="category" 
+                           name="category" 
+                           class="input-professional"
+                           placeholder="e.g., Food, Transport"
+                           required>
+                    <datalist id="categories">
+                        {% for category in categories %}
+                        <option value="{{ category.name }}">{{ category.name }}</option>
+                        {% endfor %}
+                    </datalist>
+                </div>
+                
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text font-medium text-primary-900 dark:text-slate-100">Budget Amount (₹)</span>
+                    </label>
+                    <input type="number" 
+                           step="0.01" 
+                           id="amount" 
+                           name="amount" 
+                           class="input-professional"
+                           placeholder="0.00"
+                           required>
+                </div>
+                
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text font-medium text-primary-900 dark:text-slate-100">Period</span>
+                    </label>
+                    <select id="period" 
+                            name="period" 
+                            class="select-professional"
+                            required>
+                        <option value="monthly">Monthly</option>
+                        <option value="yearly">Yearly</option>
+                        <option value="one-time">One-Time</option>
+                    </select>
+                </div>
+                
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text opacity-0">Save</span>
+                    </label>
+                    <button type="submit" 
+                            id="saveButton" 
+                            class="btn-professional btn-success-professional w-full">
+                        <i class="bi bi-plus-lg"></i>
+                        <span id="buttonText">Save</span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Budget Overview -->
+    <div class="card-professional animate-slide-up-professional">
+        <div class="section-header">
+            <h2 class="section-title">
+                <i class="bi bi-bar-chart text-primary-900"></i>
+                Budget Overview
+            </h2>
+            <span class="badge badge-primary">
+                {{ budget_summary|length }} Budget{{ budget_summary|length|pluralize }}
+            </span>
+        </div>
+
+        
+        <!-- Budget Cards -->
+        {% if budget_summary %}
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                {% for budget in budget_summary %}
+                <div class="bg-white dark:bg-slate-900 rounded-lg shadow-sm border border-slate-200 dark:border-slate-800 p-6 hover:shadow-md transition-all duration-200">
+                    <!-- Card Header -->
+                    <div class="flex justify-between items-start mb-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 bg-primary-50 dark:bg-slate-800 rounded-lg flex items-center justify-center">
+                                <i class="bi bi-tag text-primary-900 dark:text-slate-100 text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-primary-900 dark:text-slate-100">{{ budget.category }}</h3>
+                                <p class="text-sm text-slate-600 dark:text-slate-400">
+                                    {{ budget.percentage }}% used • {{ budget.period_text }}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="editBudget('{{ budget.id }}', '{{ budget.category }}', '{{ budget.total_budget }}', '{{ budget.period }}')"
+                                    class="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-300 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+                                <i class="bi bi-pencil"></i>
+                            </button>
+                            <a href="{% url 'expenses:delete_budget' budget.id %}"
+                               onclick="return confirm('Are you sure you want to delete this budget?')"
+                               class="w-8 h-8 flex items-center justify-center rounded-lg border border-rose-300 dark:border-rose-900 text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950 transition-colors">
+                                <i class="bi bi-trash"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Budget Stats -->
+                    <div class="grid grid-cols-3 gap-4 mb-4">
+                        <div>
+                            <p class="text-xs text-slate-600 dark:text-slate-400 mb-1">Budget</p>
+                            <p class="text-lg font-bold text-primary-900 dark:text-slate-100">₹{{ budget.total_budget|floatformat:0 }}</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-600 dark:text-slate-400 mb-1">Spent</p>
+                            <p class="text-lg font-bold text-rose-600 dark:text-rose-400">₹{{ budget.total_expenses|floatformat:0 }}</p>
+                        </div>
+                        <div>
+                            <p class="text-xs text-slate-600 dark:text-slate-400 mb-1">Remaining</p>
+                            <p class="text-lg font-bold {% if budget.remaining_budget < 0 %}text-rose-600 dark:text-rose-400{% else %}text-emerald-600 dark:text-emerald-400{% endif %}">
+                                ₹{{ budget.remaining_budget|floatformat:0 }}
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Progress Bar -->
+                    <div class="mb-4">
+                        <div class="w-full bg-slate-200 dark:bg-slate-800 rounded-full h-2 overflow-hidden">
+                            {% if budget.percentage > 100 %}
+                                <div class="h-2 rounded-full transition-all duration-300 bg-rose-600 w-full"></div>
+                            {% elif budget.percentage >= 80 %}
+                                <div class="h-2 rounded-full transition-all duration-300 bg-amber-500" style="width:{{ budget.percentage }}%"></div>
+                            {% else %}
+                                <div class="h-2 rounded-full transition-all duration-300 bg-emerald-600" style="width:{{ budget.percentage }}%"></div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Add Transaction Button -->
+                    <button onclick="openTransactionModal('{{ budget.id }}', '{{ budget.category }}')"
+                            class="w-full btn-professional btn-outline-professional text-sm">
+                        <i class="bi bi-plus-lg"></i>
+                        Add Transaction
+                    </button>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <!-- Empty State -->
+            <div class="text-center py-16">
+                <div class="w-20 h-20 bg-primary-50 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="bi bi-piggy-bank text-primary-900 dark:text-slate-100 text-3xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-primary-900 dark:text-slate-100 mb-2">No Budgets Yet</h3>
+                <p class="text-slate-600 dark:text-slate-400 mb-6 max-w-md mx-auto"></p>
+                    Create your first budget to start tracking your spending limits and take control of your finances
+                </p>
+                <button onclick="document.getElementById('category').focus(); window.scrollTo({ top: 0, behavior: 'smooth' });" 
+                        class="btn-professional btn-primary-professional">
+                    <i class="bi bi-plus-circle"></i>
+                    Create Your First Budget
+                </button>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Transaction Modal -->
+<div id="transactionModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-slate-900 rounded-lg shadow-xl max-w-md w-full">
+        <div class="flex justify-between items-center p-6 border-b border-slate-200 dark:border-slate-800">
+            <h3 class="text-lg font-semibold text-primary-900 dark:text-slate-100">
+                <i class="bi bi-plus-circle mr-2"></i>
+                Add Transaction for <span id="modalCategory"></span>
+            </h3>
+            <button onclick="closeTransactionModal()" class="text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-300">
+                <i class="bi bi-x-lg text-xl"></i>
+            </button>
+        </div>
+        <form method="POST" action="{% url 'expenses:add_transaction' %}">
+            {% csrf_token %}
+            <input type="hidden" id="modalCategoryInput" name="category">
+            <div class="p-6 space-y-4">
+                <div>
+                    <label for="transaction_type" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                        Transaction Type
+                    </label>
+                    <select id="transaction_type" 
+                            name="transaction_type" 
+                            class="input-professional"
+                            required>
+                        <option value="Expense">Expense</option>
+                        <option value="Income">Income</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="modal_amount" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                        Amount (₹)
+                    </label>
+                    <input type="number" 
+                           step="0.01" 
+                           id="modal_amount" 
+                           name="amount" 
+                           class="input-professional"
+                           placeholder="0.00"
+                           required>
+                </div>
+                <div>
+                    <label for="modal_description" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-2">
+                        Description
+                    </label>
+                    <textarea id="modal_description" 
+                              name="description" 
+                              class="input-professional"
+                              rows="3"
+                              placeholder="Optional note"></textarea>
+                </div>
+            </div>
+            <div class="flex gap-3 p-6 border-t border-slate-200 dark:border-slate-800">
+                <button type="button" 
+                        onclick="closeTransactionModal()" 
+                        class="flex-1 btn-professional btn-outline-professional">
+                    Cancel
+                </button>
+                <button type="submit" class="flex-1 btn-professional btn-primary-professional">
+                    <i class="bi bi-check-lg"></i>
+                    Add Transaction
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    function editBudget(id, category, amount, period) {
+        document.getElementById('budget_id').value = id;
+        document.getElementById('category').value = category;
+        document.getElementById('amount').value = amount;
+        document.getElementById('period').value = period || 'monthly';
+        document.getElementById('saveButton').innerHTML = '<i class="bi bi-save mr-2"></i> Update';
+        document.getElementById('formTitle').textContent = 'Update Budget';
+        document.getElementById('category').focus();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function openTransactionModal(budgetId, category) {
+        document.getElementById('modalCategory').textContent = category;
+        document.getElementById('modalCategoryInput').value = category;
+        document.getElementById('transactionModal').classList.remove('hidden');
+        document.getElementById('modal_amount').focus();
+    }
+
+    function closeTransactionModal() {
+        document.getElementById('transactionModal').classList.add('hidden');
+        document.getElementById('modal_amount').value = '';
+        document.getElementById('modal_description').value = '';
+    }
+
+    // Reset form when page loads
+    window.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('budget_id').value = '';
+        document.getElementById('category').value = '';
+        document.getElementById('amount').value = '';
+        document.getElementById('period').value = 'monthly';
+        document.getElementById('formTitle').textContent = 'Add Budget';
+    });
+
+    // Close modal on escape key
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            closeTransactionModal();
+        }
+    });
+
+    // Close modal on backdrop click
+    document.getElementById('transactionModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeTransactionModal();
+        }
+    });
+</script>
+{% endblock %}

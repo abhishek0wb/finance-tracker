@@ -1,0 +1,128 @@
+{% extends 'base_tailwind.html' %}
+{% load static %}
+
+{% block title %}Transactions - Hisaab{% endblock %}
+
+{% block content %}
+<div class="content-container">
+    <!-- Page Header with Action Button -->
+    <div class="page-header">
+        <div>
+            <h1 class="page-title">Transactions</h1>
+            <p class="page-subtitle">Track and manage all your financial transactions</p>
+        </div>
+        <a href="{% url 'expenses:dashboard' %}" class="btn-professional btn-outline-professional">
+            <i class="bi bi-arrow-left"></i>
+            Back to Dashboard
+        </a>
+    </div>
+
+    <!-- Quick Add Form -->
+    <div class="card-professional mb-6 animate-fade-in-professional">
+        <div class="section-header">
+            <h2 class="section-title">
+                <i class="bi bi-plus-circle text-success-600"></i>
+                Quick Add Transaction
+            </h2>
+        </div>
+        
+        <form hx-post="{% url 'expenses:quick_add_transaction' %}"
+              hx-target="#transaction-list"
+              hx-swap="afterbegin"
+              hx-on::after-request="this.reset()">
+            {% csrf_token %}
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text font-medium text-primary-900 dark:text-slate-100">Category</span>
+                    </label>
+                    <input type="text" 
+                           name="category" 
+                           placeholder="e.g., Food, Transport" 
+                           class="input-professional"
+                           required>
+                </div>
+                
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text font-medium text-primary-900 dark:text-slate-100">Type</span>
+                    </label>
+                    <select name="transaction_type" class="select-professional" required>
+                        <option value="Expense">Expense</option>
+                        <option value="Income">Income</option>
+                    </select>
+                </div>
+                
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text font-medium text-primary-900 dark:text-slate-100">Amount (₹)</span>
+                    </label>
+                    <input type="number" 
+                           name="amount" 
+                           placeholder="0.00" 
+                           step="0.01" 
+                           class="input-professional"
+                           required>
+                </div>
+                
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text font-medium text-primary-900 dark:text-slate-100">Description</span>
+                    </label>
+                    <input type="text" 
+                           name="description" 
+                           placeholder="Optional note" 
+                           class="input-professional">
+                </div>
+                
+                <div class="form-control">
+                    <label class="label">
+                        <span class="label-text opacity-0">Add</span>
+                    </label>
+                    <button type="submit" class="btn-professional btn-success-professional w-full">
+                        <i class="bi bi-plus-lg"></i>
+                        Add
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Search Box -->
+    <div class="card-professional mb-6 animate-fade-in-professional" style="animation-delay: 0.1s;">
+        <div class="form-control relative">
+            <i class="bi bi-search absolute left-4 top-1/2 -translate-y-1/2 text-base-content/50 text-lg"></i>
+            <input 
+                type="search" 
+                name="q" 
+                placeholder="Search transactions by category or description..." 
+                class="input-professional pl-12 pr-12"
+                hx-get="{% url 'expenses:search_transactions' %}"
+                hx-trigger="keyup changed delay:500ms, search"
+                hx-target="#transaction-list"
+                hx-indicator=".search-spinner">
+            <div class="search-spinner htmx-indicator absolute right-4 top-1/2 -translate-y-1/2">
+                <span class="loading loading-spinner loading-sm text-primary-900"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Transaction List -->
+    <div class="card-professional animate-fade-in-professional" style="animation-delay: 0.2s;">
+        <div class="section-header">
+            <h2 class="section-title">
+                <i class="bi bi-receipt text-primary-900"></i>
+                Transaction History
+            </h2>
+            <div class="badge badge-lg bg-primary-50 text-primary-900 border-primary-200 gap-2">
+                <i class="bi bi-clock-history"></i>
+                All Time
+            </div>
+        </div>
+        
+        <div id="transaction-list" class="space-y-4">
+            {% include 'expenses/partials/transaction_list_tailwind.html' %}
+        </div>
+    </div>
+</div>
+{% endblock %}
