@@ -16,14 +16,14 @@ A modern, minimalist personal finance tracker built with Django, HTMX, and Tailw
 
 - **Backend**: Django 4.2, PostgreSQL
 - **Frontend**: HTMX, Tailwind CSS, DaisyUI
-- **Deployment**: Docker, Google Cloud Run ready
+- **Database**: PostgreSQL (Docker) or SQLite
 
 ## Quick Start
 
 ### Prerequisites
 
 - Python 3.9+
-- PostgreSQL (or use Docker)
+- PostgreSQL (optional, can use SQLite)
 - Node.js (for Tailwind CSS)
 
 ### Installation
@@ -49,7 +49,14 @@ npm install
 4. **Configure environment**
 ```bash
 cp .env.example .env
-# Edit .env with your settings (SECRET_KEY, database credentials)
+# Edit .env with your settings
+```
+
+Required `.env` variables:
+```env
+SECRET_KEY=your-secret-key-here
+DEBUG=True
+USE_DOCKER=False  # Set to True if using PostgreSQL with Docker
 ```
 
 5. **Run migrations**
@@ -74,15 +81,29 @@ python manage.py runserver
 
 Visit `http://localhost:8000` to access the application.
 
-## Using Docker
+## Using PostgreSQL with Docker
 
-Start PostgreSQL with Docker Compose:
+If you want to use PostgreSQL instead of SQLite:
 
+1. **Start PostgreSQL**
 ```bash
 docker-compose up -d
 ```
 
-The database will be available on `localhost:5433`.
+2. **Update .env**
+```env
+USE_DOCKER=True
+POSTGRES_DB=finance_tracker
+POSTGRES_USER=finance_user
+POSTGRES_PASSWORD=your-password
+POSTGRES_HOST=localhost
+POSTGRES_PORT=5433
+```
+
+3. **Run migrations**
+```bash
+python manage.py migrate
+```
 
 ## Project Structure
 
@@ -98,31 +119,43 @@ hisaab-finance-tracker/
 ├── finance_tracker/      # Project settings
 ├── static/               # Static files (CSS, JS)
 ├── templates/            # Global templates
-├── docker/               # Docker configuration
-└── requirements.txt      # Python dependencies
+└── docker/               # Docker configuration
 ```
 
-## Key Models
+## Key Features Explained
 
-### Category
-User-specific categories with customizable icons and colors.
+### Category System
+- User-specific categories with customizable icons and colors
+- 8 default categories created automatically for new users
+- Categories can be shared across transactions and budgets
 
-### Transaction
-Income and expense records linked to categories.
+### Budget Tracking
+- Set budgets with different periods: Monthly, Yearly, or One-Time
+- Visual progress bars showing spending vs budget
+- Color-coded status (green < 80%, yellow 80-99%, red 100%+)
+- Automatic calculation of spent amounts for current period
 
-### Budget
-Monthly, yearly, or one-time spending limits with automatic calculation of spent amounts and remaining budget.
+### Transaction Management
+- Quick add form with HTMX for instant updates
+- Search functionality to filter by category or description
+- Delete transactions with confirmation
+- Automatic date assignment (today's date)
+
+### Dark Mode
+- Toggle between light and dark themes
+- Preference saved in browser localStorage
+- Smooth transitions between themes
 
 ## Development
-
-### Run tests
-```bash
-python manage.py test
-```
 
 ### Watch CSS changes
 ```bash
 npm run dev
+```
+
+### Run tests
+```bash
+python manage.py test
 ```
 
 ### Collect static files
@@ -130,29 +163,35 @@ npm run dev
 python manage.py collectstatic
 ```
 
-## Deployment
+## Database Models
 
-See [DEPLOYMENT.md](DEPLOYMENT.md) for detailed instructions on deploying to Google Cloud Run.
-
-Quick deploy:
-```bash
-./deploy.sh
+### Category
+```python
+- user: ForeignKey to User
+- name: CharField (max 50)
+- icon: CharField (Bootstrap icon name)
+- color: CharField (hex color)
+- created_at: DateTimeField
 ```
 
-## Environment Variables
+### Budget
+```python
+- user: ForeignKey to User
+- category: ForeignKey to Category
+- amount: DecimalField
+- period: CharField (monthly/yearly/one-time)
+- start_date: DateField
+- created_at: DateTimeField
+```
 
-Required variables in `.env`:
-
-```env
-SECRET_KEY=your-secret-key-here
-DEBUG=False
-USE_DOCKER=True
-
-POSTGRES_DB=finance_tracker
-POSTGRES_USER=finance_user
-POSTGRES_PASSWORD=your-password
-POSTGRES_HOST=localhost
-POSTGRES_PORT=5433
+### Transaction
+```python
+- user: ForeignKey to User
+- category: ForeignKey to Category (nullable)
+- transaction_type: CharField (Income/Expense)
+- amount: DecimalField
+- date: DateField
+- description: TextField (optional)
 ```
 
 ## Contributing
@@ -174,3 +213,19 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Built with [Django](https://www.djangoproject.com/)
 - UI powered by [Tailwind CSS](https://tailwindcss.com/) and [DaisyUI](https://daisyui.com/)
 - Dynamic interactions with [HTMX](https://htmx.org/)
+
+## Screenshots
+
+*Coming soon - Add screenshots of your application here*
+
+## Roadmap
+
+- [ ] Add data export (CSV/Excel)
+- [ ] Add charts and analytics
+- [ ] Add recurring transactions
+- [ ] Add multi-currency support
+- [ ] Add mobile app (React Native)
+
+## Support
+
+If you encounter any issues or have questions, please [open an issue](https://github.com/yourusername/hisaab-finance-tracker/issues).

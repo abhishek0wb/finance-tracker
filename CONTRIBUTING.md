@@ -1,6 +1,6 @@
 # Contributing to Hisaab Finance Tracker
 
-First off, thank you for considering contributing to Hisaab! It's people like you that make Hisaab such a great tool.
+Thank you for considering contributing to Hisaab! This is a personal finance tracker built with Django, HTMX, and Tailwind CSS.
 
 ## Code of Conduct
 
@@ -10,40 +10,39 @@ This project and everyone participating in it is governed by our [Code of Conduc
 
 ### Reporting Bugs
 
-Before creating bug reports, please check the existing issues to avoid duplicates. When you create a bug report, include as many details as possible:
+Before creating bug reports, please check existing issues. When you create a bug report, include:
 
-- **Use a clear and descriptive title**
-- **Describe the exact steps to reproduce the problem**
-- **Provide specific examples**
-- **Describe the behavior you observed and what you expected**
-- **Include screenshots if relevant**
-- **Include your environment details** (OS, Python version, Django version)
+- **Clear title** describing the issue
+- **Steps to reproduce** the problem
+- **Expected behavior** vs actual behavior
+- **Screenshots** if relevant
+- **Environment details** (OS, Python version, browser)
 
 ### Suggesting Enhancements
 
-Enhancement suggestions are tracked as GitHub issues. When creating an enhancement suggestion:
+Enhancement suggestions are tracked as GitHub issues. Include:
 
-- **Use a clear and descriptive title**
-- **Provide a detailed description of the suggested enhancement**
-- **Explain why this enhancement would be useful**
-- **List any similar features in other applications**
+- **Clear title** for the enhancement
+- **Detailed description** of the suggested feature
+- **Why this would be useful** to users
+- **Examples** from other applications if applicable
 
 ### Pull Requests
 
-1. **Fork the repository** and create your branch from `main`
-2. **Set up your development environment** (see below)
-3. **Make your changes** following our coding standards
-4. **Add tests** for any new functionality
-5. **Ensure all tests pass**
-6. **Update documentation** as needed
-7. **Submit a pull request**
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Make your changes
+4. Test your changes thoroughly
+5. Commit your changes (`git commit -m 'Add amazing feature'`)
+6. Push to the branch (`git push origin feature/amazing-feature`)
+7. Open a Pull Request
 
 ## Development Setup
 
 ### Prerequisites
 
 - Python 3.9+
-- PostgreSQL (or use Docker)
+- PostgreSQL (optional, can use SQLite)
 - Node.js (for Tailwind CSS)
 
 ### Local Setup
@@ -61,9 +60,9 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 npm install
 
-# Set up environment variables
+# Set up environment
 cp .env.example .env
-# Edit .env with your settings
+# Edit .env with: SECRET_KEY, DEBUG=True, USE_DOCKER=False
 
 # Run migrations
 python manage.py migrate
@@ -71,73 +70,68 @@ python manage.py migrate
 # Create superuser
 python manage.py createsuperuser
 
-# Build Tailwind CSS
+# Build CSS
 npm run build
 
-# Run development server
+# Run server
 python manage.py runserver
 ```
 
-### Using Docker
+### Using Docker (Optional)
 
 ```bash
 # Start PostgreSQL
 docker-compose up -d
 
+# Update .env with USE_DOCKER=True
 # Run migrations
 python manage.py migrate
-
-# Start development
-python manage.py runserver
 ```
 
 ## Coding Standards
 
-### Python Style Guide
+### Python Style
 
 - Follow [PEP 8](https://pep8.org/)
 - Use 4 spaces for indentation
 - Maximum line length: 100 characters
-- Use meaningful variable and function names
+- Use meaningful variable names
 - Add docstrings to functions and classes
 
 ### Django Best Practices
 
 - Use class-based views where appropriate
 - Keep views thin, models fat
-- Use Django's built-in authentication
 - Always use `@login_required` for protected views
-- Use Django's ORM, avoid raw SQL when possible
+- Use Django's ORM (avoid raw SQL)
 
 ### Frontend Guidelines
 
 - Use Tailwind CSS utility classes
-- Follow the existing design system
+- Follow existing design system
 - Ensure responsive design (mobile-first)
 - Test in both light and dark modes
 - Use HTMX for dynamic interactions
 
 ### Git Commit Messages
 
-- Use the present tense ("Add feature" not "Added feature")
-- Use the imperative mood ("Move cursor to..." not "Moves cursor to...")
-- Limit the first line to 72 characters
-- Reference issues and pull requests after the first line
+- Use present tense ("Add feature" not "Added feature")
+- Use imperative mood ("Move cursor to..." not "Moves cursor to...")
+- Limit first line to 72 characters
+- Reference issues after the first line
 
 Example:
 ```
-Add monthly budget summary feature
+Add budget export to CSV feature
 
-- Create new view for monthly summaries
-- Add chart visualization using Chart.js
-- Update dashboard to show summary card
+- Create export view and URL
+- Add CSV generation logic
+- Update budget page with export button
 
-Closes #123
+Closes #42
 ```
 
 ## Testing
-
-### Running Tests
 
 ```bash
 # Run all tests
@@ -145,68 +139,47 @@ python manage.py test
 
 # Run specific app tests
 python manage.py test expenses
-
-# Run with coverage
-coverage run --source='.' manage.py test
-coverage report
-```
-
-### Writing Tests
-
-- Write tests for all new features
-- Maintain or improve code coverage
-- Test both success and failure cases
-- Use descriptive test names
-
-Example:
-```python
-def test_user_can_create_budget_with_valid_data(self):
-    """Test that authenticated user can create a budget"""
-    # Test implementation
 ```
 
 ## Project Structure
 
 ```
 hisaab-finance-tracker/
-├── expenses/           # Main app for transactions and budgets
+├── expenses/           # Main app
 │   ├── models.py      # Database models
 │   ├── views.py       # View logic
 │   ├── urls.py        # URL routing
 │   └── templates/     # HTML templates
-├── users/             # User authentication app
+├── users/             # Authentication
 ├── finance_tracker/   # Project settings
-├── static/            # Static files (CSS, JS)
-├── templates/         # Global templates
-└── tests/             # Test files
+├── static/            # CSS, JS
+└── templates/         # Global templates
 ```
 
-## Documentation
+## What to Contribute
 
-- Update README.md if you change functionality
-- Add docstrings to new functions and classes
-- Update DEPLOYMENT.md for infrastructure changes
-- Create/update docs/ files for major features
+### Good First Issues
 
-## Review Process
+- Add more default categories
+- Improve error messages
+- Add form validation
+- Write tests
+- Fix UI bugs
+- Improve documentation
 
-1. **Automated checks** must pass (tests, linting)
-2. **Code review** by at least one maintainer
-3. **Documentation** must be updated
-4. **Tests** must be included for new features
+### Feature Ideas
+
+- Data export (CSV/Excel)
+- Charts and analytics
+- Recurring transactions
+- Multi-currency support
+- Budget alerts
+- Transaction tags
 
 ## Questions?
 
-Feel free to:
 - Open an issue with the "question" label
-- Reach out to maintainers
 - Check existing documentation
+- Review closed issues
 
-## Recognition
-
-Contributors will be recognized in:
-- README.md contributors section
-- Release notes
-- GitHub contributors page
-
-Thank you for contributing to Hisaab! 🎉
+Thank you for contributing! 🎉
